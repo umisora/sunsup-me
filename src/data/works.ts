@@ -69,7 +69,7 @@ export const works: Work[] = [
     lede: "A short record of the work, on this domain.",
     visual: {
       kind: "logo",
-      src: "/media/logo-cutout.png",
+      src: "/brand/header-logo.png",
       width: 500,
       height: 200,
       alt: "Suns' Up logo",
@@ -102,7 +102,7 @@ export const works: Work[] = [
     lede: "A site for someone asked to handle an office drinking party.",
     visual: {
       kind: "logo",
-      src: "/media/stylish-cutout.png",
+      src: "/media/stylish.png",
       width: 500,
       height: 500,
       alt: "Stylish! logo, a glass with a citrus slice",
@@ -160,7 +160,7 @@ export const works: Work[] = [
     lede: "A SaaS web product, still being built.",
     visual: {
       kind: "logo",
-      src: "/media/easy-ist-cutout.png",
+      src: "/media/easy-ist.png",
       width: 500,
       height: 500,
       alt: "easy.ist logo",
@@ -233,7 +233,7 @@ export const works: Work[] = [
     lede: "Bought, then sold. No shop page on this portfolio.",
     visual: {
       kind: "logo",
-      src: "/media/trading-cutout.png",
+      src: "/media/trading.png",
       width: 500,
       height: 500,
       alt: "Trading logo, a cardboard package",
@@ -269,7 +269,7 @@ export const works: Work[] = [
     lede: "Consulting and advisory for IT and SaaS.",
     visual: {
       kind: "logo",
-      src: "/media/consulting-cutout.png",
+      src: "/media/consulting.png",
       width: 500,
       height: 500,
       alt: "Consulting logo, a handshake",

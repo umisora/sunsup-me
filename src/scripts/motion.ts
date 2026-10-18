@@ -91,18 +91,16 @@ function mountReveals(): void {
   motion.add("(prefers-reduced-motion: no-preference)", () => {
     const items = gsap.utils.toArray<HTMLElement>(".reveal");
     if (items.length === 0) return;
-    gsap.set(items, { y: 22, autoAlpha: 0 });
     ScrollTrigger.batch(items, {
-      start: "top 90%",
+      start: "top 92%",
       once: true,
       onEnter: (batch) => {
-        gsap.to(batch, {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.6,
-          stagger: 0.06,
+        gsap.from(batch, {
+          y: 16,
+          duration: 0.55,
+          stagger: 0.05,
           ease: "power2.out",
-          overwrite: true,
+          overwrite: "auto",
         });
       },
     });

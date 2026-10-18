@@ -44,9 +44,9 @@ function disc(
   ctx.fillStyle = fill;
   ctx.fillRect(cx - radius + shift, cy - radius, radius * 2, radius * 2);
   ctx.fillStyle = stripe;
-  for (let band = 0; band < 8; band += 1) {
-    const y = cy - radius * 0.02 + band * radius * 0.11 + band * band * 0.35;
-    ctx.fillRect(cx - radius + shift, y, radius * 2, 1.2 + band * 0.85);
+  for (let band = 0; band < 7; band += 1) {
+    const y = cy - radius * 0.08 + band * radius * 0.13;
+    ctx.fillRect(cx - radius + shift, y, radius * 2, 1.1 + band * 0.28);
   }
   ctx.restore();
 }
@@ -66,27 +66,36 @@ export function paintHero(
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, width, height);
 
+  const mobile = width < 720;
+  const radius = mobile
+    ? Math.min(width * 0.42, height * 0.3, (width - 64) / 2)
+    : Math.min(width * 0.145, height * 0.34);
+  const cx = mobile
+    ? width * 0.5
+    : Math.min(Math.max(width * 0.76, radius + 16), width - radius - 20);
+  const cy = mobile
+    ? Math.min(Math.max(height * 0.56, radius + 36), height - radius - 56)
+    : Math.max(Math.min(height * 0.8 - radius * 0.12, height - radius - 10), radius + 8);
+  const horizon = mobile
+    ? Math.min(height - 48, cy + radius * 0.72)
+    : height * 0.8;
+
   ctx.lineWidth = 1;
-  const gap = width < 700 ? 36 : 48;
+  const gap = mobile ? 32 : 48;
   for (let x = gap; x < width; x += gap) {
-    ctx.strokeStyle = "rgba(15, 110, 134, 0.09)";
+    ctx.strokeStyle = "rgba(15, 110, 134, 0.16)";
     ctx.beginPath();
     ctx.moveTo(x, 0);
     ctx.lineTo(x, height);
     ctx.stroke();
   }
   for (let y = gap; y < height; y += gap) {
-    ctx.strokeStyle = "rgba(194, 65, 12, 0.06)";
+    ctx.strokeStyle = "rgba(194, 65, 12, 0.1)";
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(width, y);
     ctx.stroke();
   }
-
-  const horizon = height * (width < 700 ? 0.58 : 0.62);
-  const radius = Math.min(width, height) * (width < 700 ? 0.3 : 0.24);
-  const cx = width * (width < 700 ? 0.76 : 0.68);
-  const cy = horizon + radius * 0.02;
 
   const glow = ctx.createRadialGradient(cx, cy, radius * 0.15, cx, cy, radius * 2.4);
   glow.addColorStop(0, "rgba(255, 122, 42, 0.28)");
@@ -98,7 +107,7 @@ export function paintHero(
   const aberr = reduce ? 0 : 1.6 + Math.sin(time * 0.003) * 0.8;
   disc(ctx, cx, cy, radius, -aberr, "rgba(255, 106, 26, 0.28)", "rgba(243, 245, 247, 0.35)");
   disc(ctx, cx, cy, radius, aberr, "rgba(18, 194, 212, 0.22)", "rgba(243, 245, 247, 0.3)");
-  disc(ctx, cx, cy, radius, 0, "#ff7a2a", "rgba(255, 247, 238, 0.72)");
+  disc(ctx, cx, cy, radius, 0, "#ff7a2a", "rgba(255, 236, 214, 0.42)");
 
   ctx.strokeStyle = "rgba(194, 65, 12, 0.7)";
   ctx.lineWidth = 1;
@@ -112,6 +121,12 @@ export function paintHero(
   ctx.beginPath();
   ctx.rect(0, horizon, width, Math.max(0, height - horizon));
   ctx.clip();
+  const floor = ctx.createLinearGradient(0, horizon, 0, height);
+  floor.addColorStop(0, "rgba(255, 122, 42, 0.2)");
+  floor.addColorStop(0.4, "rgba(18, 194, 212, 0.1)");
+  floor.addColorStop(1, "rgba(243, 245, 247, 0)");
+  ctx.fillStyle = floor;
+  ctx.fillRect(0, horizon, width, height - horizon);
   const vanishX = width * 0.5;
   for (let column = 0; column <= 16; column += 1) {
     const x = (column / 16) * width;
@@ -125,7 +140,7 @@ export function paintHero(
   for (let row = 0; row < 12; row += 1) {
     const progress = (row + phase / 48) / 12;
     const y = horizon + progress ** 1.65 * (height - horizon);
-    const alpha = 0.12 + progress * 0.38;
+    const alpha = 0.28 + progress * 0.5;
     ctx.strokeStyle = `rgba(194, 65, 12, ${alpha})`;
     ctx.beginPath();
     ctx.moveTo(0, y);
