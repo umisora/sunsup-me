@@ -178,7 +178,7 @@ function mountCursorGrid(): void {
         context.lineWidth = 1;
         for (let x = gap; x < width; x += gap) {
           const near = Math.max(0, 1 - Math.abs(x - currentX) / 360);
-          context.strokeStyle = `rgba(125, 255, 225, ${0.04 + near * 0.22})`;
+          context.strokeStyle = `rgba(15, 110, 134, ${0.08 + near * 0.28})`;
           context.beginPath();
           context.moveTo(x, 0);
           context.lineTo(x, height);
@@ -186,13 +186,13 @@ function mountCursorGrid(): void {
         }
         for (let y = gap; y < height; y += gap) {
           const near = Math.max(0, 1 - Math.abs(y - currentY) / 280);
-          context.strokeStyle = `rgba(255, 176, 32, ${0.035 + near * 0.16})`;
+          context.strokeStyle = `rgba(194, 65, 12, ${0.07 + near * 0.22})`;
           context.beginPath();
           context.moveTo(0, y);
           context.lineTo(width, y);
           context.stroke();
         }
-        context.strokeStyle = "rgba(255, 176, 32, 0.8)";
+        context.strokeStyle = "rgba(194, 65, 12, 0.85)";
         context.strokeRect(currentX - 7, currentY - 7, 14, 14);
         if (Math.hypot(targetX - currentX, targetY - currentY) > 0.6) {
           running = true;

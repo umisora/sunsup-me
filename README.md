@@ -18,7 +18,7 @@ The header, favicon, and social image are the original logo files.
 | `public/brand/og-image.png` | Open Graph and Twitter image | 500×200 PNG, byte-identical to the header logo |
 | `public/brand/favicon.png` | The only icon (`rel="icon"`) | 500×200 PNG |
 
-Product marks live in `public/media/`. The site plates use knocked-out neon versions of those marks. Deep-GPTL is drawn as a graphic, not shown from the old image files.
+Product marks live in `public/media/`. The site plates use white-knocked cutouts of those marks on a light panel. Deep-GPTL is drawn as a graphic, not shown from the old image files. The name story in the section above stays in this file and is not printed on the site.
 
 ## Cloudflare Pages
 

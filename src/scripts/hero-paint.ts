@@ -12,7 +12,7 @@ const particles: Particle[] = [];
 let seededFor = 0;
 
 function seed(width: number, height: number): void {
-  const count = width < 700 ? 22 : 42;
+  const count = width < 700 ? 18 : 36;
   const key = Math.round(width) * 100000 + Math.round(height) * 10 + count;
   if (seededFor === key && particles.length === count) return;
   seededFor = key;
@@ -21,8 +21,8 @@ function seed(width: number, height: number): void {
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      speed: 0.45 + Math.random() * 1.15,
-      length: 8 + Math.random() * 18,
+      speed: 0.4 + Math.random() * 1.05,
+      length: 7 + Math.random() * 16,
       hot: Math.random() > 0.62,
     });
   }
@@ -35,6 +35,7 @@ function disc(
   radius: number,
   shift: number,
   fill: string,
+  stripe: string,
 ): void {
   ctx.save();
   ctx.beginPath();
@@ -42,10 +43,10 @@ function disc(
   ctx.clip();
   ctx.fillStyle = fill;
   ctx.fillRect(cx - radius + shift, cy - radius, radius * 2, radius * 2);
-  ctx.fillStyle = "#07080c";
+  ctx.fillStyle = stripe;
   for (let band = 0; band < 8; band += 1) {
-    const y = cy - radius * 0.05 + band * radius * 0.11 + band * band * 0.45;
-    ctx.fillRect(cx - radius + shift, y, radius * 2, 1.5 + band * 1.05);
+    const y = cy - radius * 0.02 + band * radius * 0.11 + band * band * 0.35;
+    ctx.fillRect(cx - radius + shift, y, radius * 2, 1.2 + band * 0.85);
   }
   ctx.restore();
 }
@@ -59,39 +60,54 @@ export function paintHero(
 ): void {
   seed(width, height);
   const sky = ctx.createLinearGradient(0, 0, 0, height);
-  sky.addColorStop(0, "#16041c");
-  sky.addColorStop(0.42, "#2a0a22");
-  sky.addColorStop(1, "#07080c");
+  sky.addColorStop(0, "#e7eef3");
+  sky.addColorStop(0.46, "#f4efe6");
+  sky.addColorStop(1, "#f3f5f7");
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, width, height);
 
-  const horizon = height * (width < 700 ? 0.56 : 0.6);
-  const radius = Math.min(width, height) * (width < 700 ? 0.34 : 0.26);
-  const cx = width * (width < 700 ? 0.78 : 0.66);
-  const cy = horizon + radius * 0.08;
+  ctx.lineWidth = 1;
+  const gap = width < 700 ? 36 : 48;
+  for (let x = gap; x < width; x += gap) {
+    ctx.strokeStyle = "rgba(15, 110, 134, 0.09)";
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  }
+  for (let y = gap; y < height; y += gap) {
+    ctx.strokeStyle = "rgba(194, 65, 12, 0.06)";
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  }
 
-  const glow = ctx.createRadialGradient(cx, cy, radius * 0.1, cx, cy, radius * 2.6);
-  glow.addColorStop(0, "rgba(255, 70, 130, 0.42)");
-  glow.addColorStop(0.38, "rgba(255, 150, 40, 0.16)");
-  glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+  const horizon = height * (width < 700 ? 0.58 : 0.62);
+  const radius = Math.min(width, height) * (width < 700 ? 0.3 : 0.24);
+  const cx = width * (width < 700 ? 0.76 : 0.68);
+  const cy = horizon + radius * 0.02;
+
+  const glow = ctx.createRadialGradient(cx, cy, radius * 0.15, cx, cy, radius * 2.4);
+  glow.addColorStop(0, "rgba(255, 122, 42, 0.28)");
+  glow.addColorStop(0.45, "rgba(18, 194, 212, 0.08)");
+  glow.addColorStop(1, "rgba(243, 245, 247, 0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, width, height);
 
-  const aberr = reduce ? 0 : 2.2 + Math.sin(time * 0.003) * 1.4;
-  ctx.globalCompositeOperation = "lighter";
-  disc(ctx, cx, cy, radius, -aberr, "rgba(255, 40, 96, 0.9)");
-  disc(ctx, cx, cy, radius, aberr, "rgba(60, 230, 255, 0.55)");
-  ctx.globalCompositeOperation = "source-over";
-  disc(ctx, cx, cy, radius, 0, "#ffb020");
+  const aberr = reduce ? 0 : 1.6 + Math.sin(time * 0.003) * 0.8;
+  disc(ctx, cx, cy, radius, -aberr, "rgba(255, 106, 26, 0.28)", "rgba(243, 245, 247, 0.35)");
+  disc(ctx, cx, cy, radius, aberr, "rgba(18, 194, 212, 0.22)", "rgba(243, 245, 247, 0.3)");
+  disc(ctx, cx, cy, radius, 0, "#ff7a2a", "rgba(255, 247, 238, 0.72)");
 
-  ctx.strokeStyle = "rgba(255, 176, 32, 0.85)";
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "rgba(194, 65, 12, 0.7)";
+  ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(0, horizon);
   ctx.lineTo(width, horizon);
   ctx.stroke();
 
-  const phase = reduce ? 12 : (time * 0.035) % 48;
+  const phase = reduce ? 12 : (time * 0.03) % 48;
   ctx.save();
   ctx.beginPath();
   ctx.rect(0, horizon, width, Math.max(0, height - horizon));
@@ -99,26 +115,26 @@ export function paintHero(
   const vanishX = width * 0.5;
   for (let column = 0; column <= 16; column += 1) {
     const x = (column / 16) * width;
-    ctx.strokeStyle = "rgba(255, 176, 32, 0.28)";
+    ctx.strokeStyle = "rgba(15, 110, 134, 0.28)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(vanishX, horizon);
     ctx.lineTo(x, height);
     ctx.stroke();
   }
-  for (let row = 0; row < 14; row += 1) {
-    const progress = (row + phase / 48) / 14;
+  for (let row = 0; row < 12; row += 1) {
+    const progress = (row + phase / 48) / 12;
     const y = horizon + progress ** 1.65 * (height - horizon);
-    const alpha = 0.12 + progress * 0.5;
-    ctx.strokeStyle = `rgba(255, 45, 120, ${alpha})`;
+    const alpha = 0.12 + progress * 0.38;
+    ctx.strokeStyle = `rgba(194, 65, 12, ${alpha})`;
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(width, y);
     ctx.stroke();
-    ctx.strokeStyle = `rgba(125, 255, 225, ${alpha * 0.4})`;
+    ctx.strokeStyle = `rgba(15, 110, 134, ${alpha * 0.7})`;
     ctx.beginPath();
-    ctx.moveTo(0, y + 1.4);
-    ctx.lineTo(width, y + 1.4);
+    ctx.moveTo(0, y + 1);
+    ctx.lineTo(width, y + 1);
     ctx.stroke();
   }
   ctx.restore();
@@ -131,7 +147,7 @@ export function paintHero(
         particle.x = Math.random() * width;
       }
     }
-    ctx.strokeStyle = particle.hot ? "rgba(255, 176, 32, 0.75)" : "rgba(125, 255, 225, 0.7)";
+    ctx.strokeStyle = particle.hot ? "rgba(194, 65, 12, 0.55)" : "rgba(15, 110, 134, 0.55)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(particle.x, particle.y);
@@ -140,10 +156,10 @@ export function paintHero(
   }
 
   if (!reduce && Math.sin(time * 0.0021) > 0.93) {
-    const y = height * (0.2 + (Math.sin(time * 0.01) * 0.5 + 0.5) * 0.6);
-    ctx.fillStyle = "rgba(125, 255, 225, 0.18)";
-    ctx.fillRect(0, y, width, 3);
-    ctx.fillStyle = "rgba(255, 45, 120, 0.16)";
-    ctx.fillRect(12, y + 6, width - 24, 2);
+    const y = height * (0.18 + (Math.sin(time * 0.01) * 0.5 + 0.5) * 0.55);
+    ctx.fillStyle = "rgba(18, 194, 212, 0.28)";
+    ctx.fillRect(0, y, width, 2);
+    ctx.fillStyle = "rgba(255, 106, 26, 0.22)";
+    ctx.fillRect(10, y + 5, width - 20, 1);
   }
 }

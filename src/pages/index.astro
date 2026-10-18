@@ -5,7 +5,7 @@ import WorkVisual from "../components/WorkVisual.astro";
 import { orderedWorks } from "../data/works";
 
 const description =
-  "Suns' Up is one person making products for small everyday problems. The name joins Sun, Sons, and sums up.";
+  "Suns' Up is one person making products for small everyday problems.";
 const terminal = "individual // products for the small problems in a day";
 ---
 
@@ -17,19 +17,8 @@ const terminal = "individual // products for the small problems in a day";
     glitch="SUNS' UP"
     typed={terminal}
   >
-    <div class="name-row">
-      <article>
-        <h2>Sun</h2>
-        <p>The sun.</p>
-      </article>
-      <article>
-        <h2>Sons</h2>
-        <p>My children.</p>
-      </article>
-      <article>
-        <h2>Sums up</h2>
-        <p>The small “nice,” when something works. いいね.</p>
-      </article>
+    <div class="actions">
+      <a class="btn solid" href="#work">Six products</a>
     </div>
   </HeroStage>
 

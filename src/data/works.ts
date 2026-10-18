@@ -69,7 +69,7 @@ export const works: Work[] = [
     lede: "A short record of the work, on this domain.",
     visual: {
       kind: "logo",
-      src: "/media/logo-on-dark.png",
+      src: "/media/logo-cutout.png",
       width: 500,
       height: 200,
       alt: "Suns' Up logo",
@@ -81,7 +81,7 @@ export const works: Work[] = [
     card: "This website. A short record of the work.",
     paragraphs: [
       "This site is the portfolio. It represents the activities in a short form.",
-      "Suns' Up is an individual project that makes products for small daily problems. The name combines Sun, Sons, and sums up.",
+      "Suns' Up is an individual project that makes products for small daily problems.",
       "Founded July 2023.",
     ],
     specs: [
@@ -89,7 +89,6 @@ export const works: Work[] = [
       { label: "What it is", value: "This website. A short record of the work." },
       { label: "Maker", value: "One person, making products for small everyday problems." },
       { label: "Founded", value: "July 2023." },
-      { label: "Name", value: "Sun, Sons, and sums up." },
     ],
   },
   {
@@ -103,7 +102,7 @@ export const works: Work[] = [
     lede: "A site for someone asked to handle an office drinking party.",
     visual: {
       kind: "logo",
-      src: "/media/stylish-neon.png",
+      src: "/media/stylish-cutout.png",
       width: 500,
       height: 500,
       alt: "Stylish! logo, a glass with a citrus slice",
@@ -161,7 +160,7 @@ export const works: Work[] = [
     lede: "A SaaS web product, still being built.",
     visual: {
       kind: "logo",
-      src: "/media/easy-ist-neon.png",
+      src: "/media/easy-ist-cutout.png",
       width: 500,
       height: 500,
       alt: "easy.ist logo",
@@ -234,7 +233,7 @@ export const works: Work[] = [
     lede: "Bought, then sold. No shop page on this portfolio.",
     visual: {
       kind: "logo",
-      src: "/media/trading-neon.png",
+      src: "/media/trading-cutout.png",
       width: 500,
       height: 500,
       alt: "Trading logo, a cardboard package",
@@ -270,7 +269,7 @@ export const works: Work[] = [
     lede: "Consulting and advisory for IT and SaaS.",
     visual: {
       kind: "logo",
-      src: "/media/consulting-neon.png",
+      src: "/media/consulting-cutout.png",
       width: 500,
       height: 500,
       alt: "Consulting logo, a handshake",
