@@ -1,0 +1,45 @@
+---
+interface Props {
+  titleId: string;
+  kicker: string;
+  title: string;
+  glitch?: string;
+  typed?: string;
+  lede?: string;
+  band?: boolean;
+  poster?: boolean;
+}
+
+const { titleId, kicker, title, glitch, typed, lede, band = false, poster = false } = Astro.props;
+---
+
+<section class:list={["stage", { band, poster }]} aria-labelledby={titleId}>
+  <canvas class="stage-canvas" data-hero aria-hidden="true"></canvas>
+  <div class="stage-scrim" aria-hidden="true"></div>
+  <div class="stage-copy">
+    <p class="kicker">{kicker}</p>
+    <h1 class="display" id={titleId} data-glitch={glitch}>
+      {title}
+    </h1>
+    {
+      typed && (
+        <p class="term">
+          <span class="term-prompt" aria-hidden="true">&gt;</span>
+          <span data-typed={typed}>{typed}</span>
+        </p>
+      )
+    }
+    {lede && <p class="lede">{lede}</p>}
+    <div class="stage-foot">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { mountHero } from "../scripts/hero-scene";
+
+  document.querySelectorAll("[data-hero]").forEach((node) => {
+    if (node instanceof HTMLCanvasElement) mountHero(node);
+  });
+</script>

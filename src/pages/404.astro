@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+import HeroStage from "../components/HeroStage.astro";
+---
+
+<Base
+  title="Page not found | Suns' Up Portfolio"
+  description="This page doesn't exist or has moved."
+  path="/404"
+  noindex={true}
+>
+  <HeroStage titleId="lost-title" kicker="404" title="404" glitch="404">
+    <p class="lede">This page doesn't exist or has moved.</p>
+    <div class="actions">
+      <a class="btn solid" href="/">Back to home</a>
+      <a class="btn" href="/#work">Work</a>
+    </div>
+  </HeroStage>
+</Base>

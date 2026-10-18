@@ -1,0 +1,54 @@
+---
+import Base from "../../layouts/Base.astro";
+import HeroStage from "../../components/HeroStage.astro";
+
+const description =
+  "Suns' Up is one person making products for small everyday problems. Infrastructure, cloud, and SaaS engineering, with Scrum and operations work.";
+---
+
+<Base title="About | Suns' Up Portfolio" description={description} path="/about/me">
+  <HeroStage titleId="about-title" kicker="About · individual" title="About" band>
+    <p class="lede">
+      Suns' Up is one person. The products are for small problems that show up in ordinary days.
+    </p>
+    <div class="actions">
+      <a class="btn solid" href="/#work">See the work</a>
+      <a class="btn" href="#skills">Skills</a>
+    </div>
+  </HeroStage>
+
+  <div class="wrap">
+    <section class="sheet" aria-labelledby="record-title">
+      <div class="prose">
+        <h2 id="record-title">The record</h2>
+        <p>The work that is written down here sits in infrastructure engineering and SaaS development.</p>
+        <p>Founded July 2023.</p>
+        <p>This site does not publish an email address or a social profile.</p>
+      </div>
+    </section>
+
+    <section class="sheet reveal" id="skills" aria-labelledby="skills-title">
+      <div class="section-head">
+        <h2 id="skills-title">Skills</h2>
+        <p>Published lines</p>
+      </div>
+      <div class="facts">
+        <article class="fact">
+          <h3>Versatile</h3>
+          <p>Excelling at infrastructure, cloud, and SaaS engineering.</p>
+        </article>
+        <article class="fact">
+          <h3>Managerial</h3>
+          <p>Inspiring teams via Scrum Master principles.</p>
+        </article>
+        <article class="fact">
+          <h3>Operational</h3>
+          <p>Expert in engineering operations and maintenance.</p>
+        </article>
+      </div>
+      <p class="note">
+        The same three lines are on <a href="/work/consulting">Consulting / Advisory</a>.
+      </p>
+    </section>
+  </div>
+</Base>

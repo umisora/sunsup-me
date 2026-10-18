@@ -1,0 +1,109 @@
+---
+import type { Visual } from "../data/works";
+
+interface Props {
+  visual: Visual;
+  tone: string;
+  code: string;
+  priority?: boolean;
+}
+
+const { visual, tone, code, priority = false } = Astro.props;
+
+if (visual.kind !== "logo" && visual.kind !== "console") {
+  const unexpected: never = visual;
+  throw new Error(`Unhandled visual ${String(unexpected)}`);
+}
+---
+
+<figure class="plate" data-tone={tone}>
+  <span class="bracket tl" aria-hidden="true"></span>
+  <span class="bracket tr" aria-hidden="true"></span>
+  <span class="bracket bl" aria-hidden="true"></span>
+  <span class="bracket br" aria-hidden="true"></span>
+  {
+    visual.kind === "logo" ? (
+      <img
+        src={visual.src}
+        width={visual.width}
+        height={visual.height}
+        alt={visual.alt}
+        data-mark={visual.mark}
+        decoding="async"
+        fetchpriority={priority ? "high" : undefined}
+        loading={priority ? undefined : "lazy"}
+      />
+    ) : (
+      <svg class="console" viewBox="0 0 640 400" role="img" aria-labelledby={`${code}-console`}>
+        <title id={`${code}-console`}>Graphic of a translation console. Not a screenshot.</title>
+        <rect x="18" y="18" width="604" height="364" fill="#f7f9fb" stroke="#0f6e86" stroke-opacity="0.55"></rect>
+        <rect x="18" y="18" width="604" height="28" fill="#e7eef3"></rect>
+        <text x="32" y="37" fill="#c2410c" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12">
+          IN
+        </text>
+        <text x="330" y="37" fill="#0f6e86" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12">
+          OUT
+        </text>
+        <line x1="320" y1="46" x2="320" y2="382" stroke="#c2410c" stroke-opacity="0.45"></line>
+        <g fill="#c2410c" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13">
+          <text class="stream" x="36" y="78">
+            ░▒ ▓ source ░▒▓
+          </text>
+          <text class="stream delay" x="36" y="108">
+            ██ ░ line ▓▒░ ██
+          </text>
+          <text class="stream" x="36" y="138">
+            ▒▓ field ░░ ▓▒
+          </text>
+          <text class="stream delay" x="36" y="168">
+            ░░ ▓▒ token ░██
+          </text>
+          <text class="stream" x="36" y="198">
+            ▓▒░ ░░ ▓ phrase
+          </text>
+          <text class="stream delay" x="36" y="228">
+            ██ ▒░ ▓▒ ██ ░
+          </text>
+          <text class="stream" x="36" y="258">
+            ░▒▓ stream ░░
+          </text>
+          <text class="stream delay" x="36" y="288">
+            ▓░ ▒▒ ░ glyph ▓
+          </text>
+        </g>
+        <g fill="#0f6e86" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13">
+          <text class="stream delay" x="344" y="78">
+            ▓▒░ ░ out ▒▓
+          </text>
+          <text class="stream" x="344" y="108">
+            ░░ ██ ▓▒ line ░
+          </text>
+          <text class="stream delay" x="344" y="138">
+            ▒▓ ░░ field ██
+          </text>
+          <text class="stream" x="344" y="168">
+            ██ ░▒ ▓ token ░
+          </text>
+          <text class="stream delay" x="344" y="198">
+            ░▓ ▒ phrase ░░
+          </text>
+          <text class="stream" x="344" y="228">
+            ▓▒ ██ ░░ ▒▓
+          </text>
+          <text class="stream delay" x="344" y="258">
+            ░░ stream ▓▒░
+          </text>
+          <text class="stream" x="344" y="288">
+            ▒░ ▓ glyph ██
+          </text>
+        </g>
+        <text x="36" y="348" fill="#14181f" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12">
+          GRAPHIC / NOT A SCREENSHOT
+        </text>
+        <polyline points="292,190 320,206 292,222" fill="none" stroke="#c2410c" stroke-width="1.5"></polyline>
+      </svg>
+    )
+  }
+  <span class="plate-scan" aria-hidden="true"></span>
+  <span class="ticks" aria-hidden="true">{code}</span>
+</figure>

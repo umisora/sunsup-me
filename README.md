@@ -6,19 +6,19 @@ Suns' Up
 
 Suns' Up は Sun (太陽), Sons(私の子供達), sums up (いいね)の複合した様々な日々の小さな課題を解決するプロダクトを作る個人です。このページはSuns' Upのポートフォリオページです。
 
-Suns' Up portfolio (https://www.sunsup.me/), migrated from Framer to a static site for Cloudflare Pages. The English text on the pages is the live site copy. The Japanese text above is the source of truth for what the site means.
+Suns' Up portfolio (https://www.sunsup.me/), a static site for Cloudflare Pages. The Japanese text above is the source of truth for what the site means: one person, making products for small everyday problems. The name stacks Sun (the sun), Sons (my children), and sums up (いいね).
 
 ## Brand
 
-Original files from the live site, saved at the resolution Framer serves. `header-logo.png` and `og-image.png` are the same PNG (the header also uses it, and so do the Open Graph and Twitter images). The pages still load these bytes from `site/assets/images/`.
+The header, favicon, and social image are the original logo files.
 
-| File | Role | Pixels | Live source |
-| --- | --- | --- | --- |
-| `public/brand/header-logo.png` | Header logo | 500×200 PNG | `o0CZu6Cp6EcAaHbvXjEECggq68k.png` |
-| `public/brand/og-image.png` | Open Graph and Twitter image | 500×200 PNG, byte-identical to the header logo | `o0CZu6Cp6EcAaHbvXjEECggq68k.png` |
-| `public/brand/favicon.png` | The only icon (`rel="icon"`) | 500×200 PNG | `y6BmvMzbN6R4oWIMBAWSW0K6o4.png` |
+| File | Role | Pixels |
+| --- | --- | --- |
+| `public/brand/header-logo.png` | Header logo | 500×200 PNG |
+| `public/brand/og-image.png` | Open Graph and Twitter image | 500×200 PNG, byte-identical to the header logo |
+| `public/brand/favicon.png` | The only icon (`rel="icon"`) | 500×200 PNG |
 
-The live site does not publish an apple-touch icon, a `favicon.ico`, or an SVG of the logo.
+Product marks live in `public/media/`. Plates frame the original files on a white mat so the colour stays intact. The header wordmark is the same logo with only the exterior white removed. Deep-GPTL is drawn as a graphic, not shown from the old image files. The name story in the section above stays in this file and is not printed on the site.
 
 ## Cloudflare Pages
 
@@ -28,7 +28,7 @@ The live site does not publish an apple-touch icon, a `favicon.ico`, or an SVG o
 | Build output directory | `dist` |
 | Node.js version | 22 (see `.node-version`) |
 
-`npm run build` copies `site/` to `dist/` and fails if any Framer CDN URL remains in the output.
+`npm run build` runs Astro and writes static files to `dist/`. The build fails if a Framer CDN URL remains, or if the home page does not contain exactly one link to `https://stylish.sunsup.me/`.
 
 ## Pages
 
@@ -36,12 +36,12 @@ Clean URLs come from directory indexes:
 
 - `/` → `dist/index.html`
 - `/about/me` → `dist/about/me/index.html`
-- `/work/portfolio` → `dist/work/portfolio/index.html` (new)
-- `/work/stylish` → `dist/work/stylish/index.html` (new)
-- `/work/easy-ist` → `dist/work/easy-ist/index.html` (new)
-- `/work/deep-gptl` → `dist/work/deep-gptl/index.html` (migrated from Framer)
-- `/work/trading` → `dist/work/trading/index.html` (new)
-- `/work/consulting` → `dist/work/consulting/index.html` (new)
+- `/work/portfolio` → `dist/work/portfolio/index.html`
+- `/work/stylish` → `dist/work/stylish/index.html`
+- `/work/easy-ist` → `dist/work/easy-ist/index.html`
+- `/work/deep-gptl` → `dist/work/deep-gptl/index.html`
+- `/work/trading` → `dist/work/trading/index.html`
+- `/work/consulting` → `dist/work/consulting/index.html`
 - unknown paths → `dist/404.html`
 
 `dist/sitemap.xml` and `dist/robots.txt` are included.
@@ -50,5 +50,5 @@ Clean URLs come from directory indexes:
 
 ```sh
 npm run build
-python3 -m http.server 4173 --directory dist
+npm run preview
 ```

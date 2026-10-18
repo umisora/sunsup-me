@@ -1,0 +1,113 @@
+---
+import Base from "../../layouts/Base.astro";
+import WorkVisual from "../../components/WorkVisual.astro";
+import { works, type Work } from "../../data/works";
+
+export function getStaticPaths() {
+  return works.map((work) => ({
+    params: { slug: work.slug },
+    props: { work },
+  }));
+}
+
+interface Props {
+  work: Work;
+}
+
+const { work } = Astro.props;
+const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
+---
+
+<Base
+  title={`${work.title} | Suns' Up Portfolio`}
+  description={work.description}
+  path={`/work/${work.slug}`}
+  image={work.share}
+>
+  <div class="wrap">
+    <header class="dossier">
+      <div class="copy">
+        <p class="kicker">SU-{work.index} / {work.nav}</p>
+        <h1>{work.title}</h1>
+        <p class="lede">{work.lede}</p>
+        <div class="actions">
+          {
+            work.external && (
+              <a class="btn solid" href={work.external.href} target="_blank" rel="noopener noreferrer">
+                {work.external.label}
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            )
+          }
+          <a class="btn" href="/#work">All work</a>
+          {work.slug === "consulting" && <a class="btn" href="/about/me#skills">Skills</a>}
+          {work.slug === "portfolio" && <a class="btn solid" href="/">This site</a>}
+        </div>
+      </div>
+      <WorkVisual visual={work.visual} tone={work.tone} code={`SU-${work.index}`} priority />
+    </header>
+
+    <section class="sheet" aria-labelledby="summary-title">
+      <div class="prose">
+        <h2 id="summary-title">{work.summary}</h2>
+        {work.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        {
+          work.footnote && (
+            <p class="note">
+              {work.footnote}
+              {work.slug === "consulting" && (
+                <>
+                  {" "}
+                  <a href="/about/me#skills">About</a>
+                </>
+              )}
+            </p>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="sheet reveal" aria-labelledby="spec-title">
+      <div class="section-head">
+        <h2 id="spec-title">Spec</h2>
+        <p>Published facts</p>
+      </div>
+      <dl class="spec">
+        {
+          work.specs.map((row) => (
+            <div>
+              <dt>{row.label}</dt>
+              <dd>{row.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    {
+      work.tally && tallyTotal !== undefined && (
+        <section class="sheet reveal" aria-labelledby="tally-title">
+          <div class="section-head">
+            <h2 id="tally-title">Drink list</h2>
+            <p>{tallyTotal} bottles</p>
+          </div>
+          <div class="tally">
+            <ol>
+              {work.tally.map((row) => (
+                <li>
+                  <span>{row.code}</span>
+                  <span>{row.label}</span>
+                  <span>{row.count}</span>
+                </li>
+              ))}
+            </ol>
+            <p class="tally-total">
+              <span>Listed bottles</span>
+              <strong>{tallyTotal}</strong>
+            </p>
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Base>

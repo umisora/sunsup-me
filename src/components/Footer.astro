@@ -1,0 +1,23 @@
+---
+import { orderedWorks } from "../data/works";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<footer class="site-footer">
+  <nav aria-label="Pages">
+    <a href="/" aria-current={path === "/" ? "page" : undefined}>Home</a>
+    {
+      orderedWorks().map((work) => {
+        const href = `/work/${work.slug}`;
+        return (
+          <a href={href} aria-current={path === href ? "page" : undefined}>
+            {work.nav}
+          </a>
+        );
+      })
+    }
+    <a href="/about/me" aria-current={path === "/about/me" ? "page" : undefined}>About</a>
+  </nav>
+  <p class="legal">© 2023 Suns' Up. Founded July 2023.</p>
+</footer>
