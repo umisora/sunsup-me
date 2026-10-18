@@ -1,0 +1,9 @@
+{
+  "name": "sunsup-me",
+  "private": true,
+  "type": "module",
+  "description": "Suns' Up portfolio, static site for Cloudflare Pages",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}
