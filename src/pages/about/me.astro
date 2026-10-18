@@ -1,0 +1,74 @@
+---
+import Base from "../../layouts/Base.astro";
+import Sunfield from "../../components/Sunfield.astro";
+
+const description =
+  "Suns' Up is one person making products for small everyday problems. Infrastructure, cloud, and SaaS engineering, with Scrum and operations work.";
+---
+
+<Base title="About | Suns' Up Portfolio" description={description} path="/about/me">
+  <div class="wrap">
+    <section class="page-hero" aria-labelledby="about-title">
+      <div class="copy">
+        <p class="kicker">About · individual</p>
+        <h1 id="about-title">About</h1>
+        <p class="lede">
+          Suns' Up is one person. The products are for small problems that show up in ordinary days.
+        </p>
+        <div class="actions">
+          <a class="btn solid" href="/#work">See the work</a>
+          <a class="btn" href="#skills">Skills</a>
+        </div>
+      </div>
+      <Sunfield />
+    </section>
+
+    <section class="sheet two" aria-labelledby="name-title">
+      <div class="prose">
+        <h2 id="name-title">The name</h2>
+        <p>Sun is the sun. Sons is my children. Sums up is the small nice feeling when something works: いいね.</p>
+        <p>The work that is written down here sits in infrastructure engineering and SaaS development.</p>
+        <p>Founded July 2023.</p>
+        <p>This site does not publish an email address or a social profile.</p>
+      </div>
+      <div class="name-row">
+        <article>
+          <h2>Sun</h2>
+          <p>The sun.</p>
+        </article>
+        <article>
+          <h2>Sons</h2>
+          <p>My children.</p>
+        </article>
+        <article>
+          <h2>Sums up</h2>
+          <p>いいね.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sheet" id="skills" aria-labelledby="skills-title">
+      <div class="section-head">
+        <h2 id="skills-title">Skills</h2>
+        <p>Published lines</p>
+      </div>
+      <div class="facts">
+        <article class="fact">
+          <h3>Versatile</h3>
+          <p>Excelling at infrastructure, cloud, and SaaS engineering.</p>
+        </article>
+        <article class="fact">
+          <h3>Managerial</h3>
+          <p>Inspiring teams via Scrum Master principles.</p>
+        </article>
+        <article class="fact">
+          <h3>Operational</h3>
+          <p>Expert in engineering operations and maintenance.</p>
+        </article>
+      </div>
+      <p class="note">
+        The same three lines are on <a href="/work/consulting">Consulting / Advisory</a>.
+      </p>
+    </section>
+  </div>
+</Base>

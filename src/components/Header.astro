@@ -1,0 +1,73 @@
+---
+import { orderedWorks } from "../data/works";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const aboutCurrent = path === "/about/me" ? "page" : undefined;
+---
+
+<header class="top">
+  <a class="brand" href="/">
+    <img src="/brand/header-logo.png" width="500" height="200" alt="Suns' Up" />
+  </a>
+  <p class="status">06 products · July 2023</p>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="site-nav">
+    Menu
+  </button>
+  <nav id="site-nav" class="site-nav" aria-label="Site" data-nav>
+    {
+      orderedWorks().map((work) => {
+        const href = `/work/${work.slug}`;
+        return (
+          <a href={href} aria-current={path === href ? "page" : undefined}>
+            {work.nav}
+          </a>
+        );
+      })
+    }
+    <a href="/about/me" aria-current={aboutCurrent}>About</a>
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector(".menu");
+  const nav = document.querySelector("[data-nav]");
+  if (button instanceof HTMLButtonElement && nav instanceof HTMLElement) {
+    const desktop = window.matchMedia("(min-width: 1040px)");
+
+    const close = () => {
+      nav.classList.remove("is-open");
+      button.setAttribute("aria-expanded", "false");
+      button.textContent = "Menu";
+      document.body.classList.remove("nav-lock");
+    };
+
+    const open = () => {
+      nav.classList.add("is-open");
+      button.setAttribute("aria-expanded", "true");
+      button.textContent = "Close";
+      document.body.classList.add("nav-lock");
+      const first = nav.querySelector("a");
+      if (first instanceof HTMLAnchorElement) first.focus();
+    };
+
+    button.addEventListener("click", () => {
+      if (nav.classList.contains("is-open")) close();
+      else open();
+    });
+
+    nav.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && nav.classList.contains("is-open")) {
+        close();
+        button.focus();
+      }
+    });
+
+    desktop.addEventListener("change", () => {
+      if (desktop.matches) close();
+    });
+  }
+</script>
