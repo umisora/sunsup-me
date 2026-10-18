@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Sunfield from "../components/Sunfield.astro";
+import HeroStage from "../components/HeroStage.astro";
 ---
 
 <Base
@@ -9,16 +9,11 @@ import Sunfield from "../components/Sunfield.astro";
   path="/404"
   noindex={true}
 >
-  <div class="wrap">
-    <section class="lost" aria-labelledby="lost-title">
-      <p class="kicker">404</p>
-      <h1 class="display" id="lost-title">404</h1>
-      <p class="lede">This page doesn't exist or has moved.</p>
-      <div class="actions">
-        <a class="btn solid" href="/">Back to home</a>
-        <a class="btn" href="/#work">Work</a>
-      </div>
-      <Sunfield />
-    </section>
-  </div>
+  <HeroStage titleId="lost-title" kicker="404" title="404" glitch="404">
+    <p class="lede">This page doesn't exist or has moved.</p>
+    <div class="actions">
+      <a class="btn solid" href="/">Back to home</a>
+      <a class="btn" href="/#work">Work</a>
+    </div>
+  </HeroStage>
 </Base>

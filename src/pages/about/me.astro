@@ -1,28 +1,23 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Sunfield from "../../components/Sunfield.astro";
+import HeroStage from "../../components/HeroStage.astro";
 
 const description =
   "Suns' Up is one person making products for small everyday problems. Infrastructure, cloud, and SaaS engineering, with Scrum and operations work.";
 ---
 
 <Base title="About | Suns' Up Portfolio" description={description} path="/about/me">
-  <div class="wrap">
-    <section class="page-hero" aria-labelledby="about-title">
-      <div class="copy">
-        <p class="kicker">About · individual</p>
-        <h1 id="about-title">About</h1>
-        <p class="lede">
-          Suns' Up is one person. The products are for small problems that show up in ordinary days.
-        </p>
-        <div class="actions">
-          <a class="btn solid" href="/#work">See the work</a>
-          <a class="btn" href="#skills">Skills</a>
-        </div>
-      </div>
-      <Sunfield />
-    </section>
+  <HeroStage titleId="about-title" kicker="About · individual" title="About" band>
+    <p class="lede">
+      Suns' Up is one person. The products are for small problems that show up in ordinary days.
+    </p>
+    <div class="actions">
+      <a class="btn solid" href="/#work">See the work</a>
+      <a class="btn" href="#skills">Skills</a>
+    </div>
+  </HeroStage>
 
+  <div class="wrap">
     <section class="sheet two" aria-labelledby="name-title">
       <div class="prose">
         <h2 id="name-title">The name</h2>
@@ -47,7 +42,7 @@ const description =
       </div>
     </section>
 
-    <section class="sheet" id="skills" aria-labelledby="skills-title">
+    <section class="sheet reveal" id="skills" aria-labelledby="skills-title">
       <div class="section-head">
         <h2 id="skills-title">Skills</h2>
         <p>Published lines</p>

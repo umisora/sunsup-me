@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import WorkVisual from "../../components/WorkVisual.astro";
 import { works, type Work } from "../../data/works";
 
 export function getStaticPaths() {
@@ -14,7 +15,6 @@ interface Props {
 }
 
 const { work } = Astro.props;
-const image = work.slug === "portfolio" ? "/brand/og-image.png" : work.logo.src;
 const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
 ---
 
@@ -22,12 +22,12 @@ const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
   title={`${work.title} | Suns' Up Portfolio`}
   description={work.description}
   path={`/work/${work.slug}`}
-  image={image}
+  image={work.share}
 >
   <div class="wrap">
-    <header class="page-hero poster">
+    <header class="dossier">
       <div class="copy">
-        <p class="kicker">Work · {work.index}</p>
+        <p class="kicker">SU-{work.index} / {work.nav}</p>
         <h1>{work.title}</h1>
         <p class="lede">{work.lede}</p>
         <div class="actions">
@@ -44,19 +44,10 @@ const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
           {work.slug === "portfolio" && <a class="btn solid" href="/">This site</a>}
         </div>
       </div>
-      <div class="plate" data-tone={work.tone}>
-        <img
-          src={work.logo.src}
-          width={work.logo.width}
-          height={work.logo.height}
-          alt={work.logo.alt}
-          data-fit={work.logoFit}
-          fetchpriority="high"
-        />
-      </div>
+      <WorkVisual visual={work.visual} tone={work.tone} code={`SU-${work.index}`} priority />
     </header>
 
-    <section class:list={["sheet", { two: Boolean(work.tally) }]} aria-labelledby="summary-title">
+    <section class="sheet" aria-labelledby="summary-title">
       <div class="prose">
         <h2 id="summary-title">{work.summary}</h2>
         {work.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
@@ -74,9 +65,33 @@ const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
           )
         }
       </div>
-      {
-        work.tally && tallyTotal !== undefined && (
-          <div class="tally" aria-label="Drink list">
+    </section>
+
+    <section class="sheet reveal" aria-labelledby="spec-title">
+      <div class="section-head">
+        <h2 id="spec-title">Spec</h2>
+        <p>Published facts</p>
+      </div>
+      <dl class="spec">
+        {
+          work.specs.map((row) => (
+            <div>
+              <dt>{row.label}</dt>
+              <dd>{row.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    {
+      work.tally && tallyTotal !== undefined && (
+        <section class="sheet reveal" aria-labelledby="tally-title">
+          <div class="section-head">
+            <h2 id="tally-title">Drink list</h2>
+            <p>{tallyTotal} bottles</p>
+          </div>
+          <div class="tally">
             <ol>
               {work.tally.map((row) => (
                 <li>
@@ -90,57 +105,6 @@ const tallyTotal = work.tally?.reduce((sum, row) => sum + row.count, 0);
               <span>Listed bottles</span>
               <strong>{tallyTotal}</strong>
             </p>
-          </div>
-        )
-      }
-    </section>
-
-    {
-      work.facts && (
-        <section class="sheet" aria-labelledby="facts-title">
-          <div class="section-head">
-            <h2 id="facts-title">What is published</h2>
-          </div>
-          <div class="facts">
-            {work.facts.map((fact) => (
-              <article class="fact">
-                <h3>{fact.title}</h3>
-                {fact.text && <p>{fact.text}</p>}
-                {fact.items && (
-                  <ul>
-                    {fact.items.map((item) => (
-                      <li>{item}</li>
-                    ))}
-                  </ul>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    {
-      work.shots && (
-        <section class="sheet" aria-labelledby="shots-title">
-          <div class="section-head">
-            <h2 id="shots-title">Screens</h2>
-          </div>
-          <div class="shots">
-            {work.shots.map((shot) => (
-              <figure class="shot">
-                <img
-                  src={shot.src}
-                  srcset={`${shot.small} 512w, ${shot.src} ${shot.width}w`}
-                  sizes="(min-width: 960px) 46vw, 92vw"
-                  width={shot.width}
-                  height={shot.height}
-                  alt={shot.alt}
-                  loading="lazy"
-                />
-                <figcaption>{shot.caption}</figcaption>
-              </figure>
-            ))}
           </div>
         </section>
       )

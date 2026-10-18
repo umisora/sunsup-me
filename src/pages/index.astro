@@ -1,56 +1,49 @@
 ---
 import Base from "../layouts/Base.astro";
-import Sunfield from "../components/Sunfield.astro";
+import HeroStage from "../components/HeroStage.astro";
+import WorkVisual from "../components/WorkVisual.astro";
 import { orderedWorks } from "../data/works";
 
 const description =
   "Suns' Up is one person making products for small everyday problems. The name joins Sun, Sons, and sums up.";
+const terminal = "individual // products for the small problems in a day";
 ---
 
 <Base title="Suns' Up Portfolio" description={description} path="/" image="/brand/og-image.png">
-  <div class="wrap">
-    <section class="hero" aria-labelledby="home-title">
-      <div>
-        <p class="kicker">Portfolio · individual</p>
-        <h1 class="display" id="home-title">Suns' <br />Up</h1>
-        <p class="lede">One person, making products for the small problems that show up in a day.</p>
-        <div class="name-row">
-          <article>
-            <h2>Sun</h2>
-            <p>The sun.</p>
-          </article>
-          <article>
-            <h2>Sons</h2>
-            <p>My children.</p>
-          </article>
-          <article>
-            <h2>Sums up</h2>
-            <p>The small “nice,” when something works. いいね.</p>
-          </article>
-        </div>
-      </div>
-      <Sunfield />
-    </section>
+  <HeroStage
+    titleId="home-title"
+    kicker="Portfolio · individual"
+    title="SUNS' UP"
+    glitch="SUNS' UP"
+    typed={terminal}
+  >
+    <div class="name-row">
+      <article>
+        <h2>Sun</h2>
+        <p>The sun.</p>
+      </article>
+      <article>
+        <h2>Sons</h2>
+        <p>My children.</p>
+      </article>
+      <article>
+        <h2>Sums up</h2>
+        <p>The small “nice,” when something works. いいね.</p>
+      </article>
+    </div>
+  </HeroStage>
 
-    <div class="section-head" id="work">
+  <div class="wrap">
+    <div class="section-head reveal" id="work">
       <h2>Work</h2>
       <p>Six products</p>
     </div>
     <div class="works">
       {
         orderedWorks().map((work) => (
-          <article class="card" data-layout={work.layout}>
+          <article class="card reveal" data-layout={work.layout}>
             <a class="card-main" href={`/work/${work.slug}`}>
-              <div class="plate" data-tone={work.tone}>
-                <img
-                  src={work.logo.src}
-                  width={work.logo.width}
-                  height={work.logo.height}
-                  alt={work.logo.alt}
-                  data-fit={work.logoFit}
-                  loading="lazy"
-                />
-              </div>
+              <WorkVisual visual={work.visual} tone={work.tone} code={`SU-${work.index}`} />
               <div class="card-copy">
                 <p class="idx">{work.index} / product</p>
                 <h2>{work.title}</h2>

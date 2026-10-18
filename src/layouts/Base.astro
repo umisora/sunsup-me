@@ -49,6 +49,7 @@ const imageUrl = new URL(image, Astro.site).href;
     <meta name="twitter:image" content={imageUrl} />
   </head>
   <body>
+    <canvas class="cursor-field" data-cursor aria-hidden="true"></canvas>
     <a class="skip" href="#main">Skip to content</a>
     <div class="shell">
       <Header />
@@ -57,5 +58,10 @@ const imageUrl = new URL(image, Astro.site).href;
       </main>
       <Footer />
     </div>
+    <script>
+      import { mountMotion } from "../scripts/motion";
+
+      mountMotion();
+    </script>
   </body>
 </html>
